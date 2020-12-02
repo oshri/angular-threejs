@@ -1,0 +1,174 @@
+{
+  "version": 1,
+  "projects": {
+    "threejs": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/threejs",
+      "sourceRoot": "apps/threejs/src",
+      "prefix": "threejs",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/threejs",
+            "index": "apps/threejs/src/index.html",
+            "main": "apps/threejs/src/main.ts",
+            "polyfills": "apps/threejs/src/polyfills.ts",
+            "tsConfig": "apps/threejs/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/threejs/src/favicon.ico",
+              "apps/threejs/src/assets"
+            ],
+            "styles": ["apps/threejs/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/threejs/src/environments/environment.ts",
+                  "with": "apps/threejs/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "threejs:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "threejs:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "threejs:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/threejs/tsconfig.app.json",
+              "apps/threejs/tsconfig.spec.json",
+              "apps/threejs/tsconfig.editor.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/threejs/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/threejs/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "threejs-e2e": {
+      "root": "apps/threejs-e2e",
+      "sourceRoot": "apps/threejs-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/threejs-e2e/cypress.json",
+            "tsConfig": "apps/threejs-e2e/tsconfig.e2e.json",
+            "devServerTarget": "threejs:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "threejs:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/threejs-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/threejs-e2e/**/*"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/workspace": {
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/cypress": {
+      "cypress-project": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/node": {
+      "application": {
+        "linter": "tslint"
+      },
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/nest": {
+      "application": {
+        "linter": "tslint"
+      },
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/express": {
+      "application": {
+        "linter": "tslint"
+      },
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "threejs"
+}
