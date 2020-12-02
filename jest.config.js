@@ -1,3 +1,3 @@
 module.exports = {
-  projects: ['<rootDir>/apps/threejs'],
+  projects: ['<rootDir>/apps/angular-threejs'],
 };

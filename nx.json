@@ -1,5 +1,5 @@
 {
-  "npmScope": "threejs",
+  "npmScope": "angular-threejs",
   "affected": {
     "defaultBase": "master"
   },
@@ -23,12 +23,12 @@
     }
   },
   "projects": {
-    "threejs": {
+    "angular-threejs": {
       "tags": []
     },
-    "threejs-e2e": {
+    "angular-threejs-e2e": {
       "tags": [],
-      "implicitDependencies": ["threejs"]
+      "implicitDependencies": ["angular-threejs"]
     }
   }
 }
