@@ -1,22 +1,20 @@
 import * as THREE from 'three';
 import { Injectable, ElementRef, OnDestroy, NgZone } from '@angular/core';
-import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
-import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 @Injectable({ providedIn: 'root' })
-export class EngineBasicService implements OnDestroy {
+export abstract class BaseEngineService implements OnDestroy {
   private canvas: HTMLCanvasElement;
   private renderer: THREE.WebGLRenderer;
-  private camera: THREE.PerspectiveCamera;
-  private scene: THREE.Scene;
-  
-  private controllerObject: any;
-  private orbitControls: OrbitControls;
-  
+  camera: THREE.PerspectiveCamera;
+  scene: THREE.Scene;
+
+  orbitControls: OrbitControls;
+  controllerObject: any;
+
   private frameId: number = null;
 
-  public constructor(private ngZone: NgZone) {}
+  constructor(private ngZone: NgZone) {}
 
   public ngOnDestroy(): void {
     if (this.frameId != null) {
@@ -34,7 +32,6 @@ export class EngineBasicService implements OnDestroy {
     });
     this.renderer.setSize(window.innerWidth, window.innerHeight);
 
-
     this.scene = new THREE.Scene();
 
     this.camera = new THREE.PerspectiveCamera(
@@ -47,19 +44,8 @@ export class EngineBasicService implements OnDestroy {
     this.orbitControls = new OrbitControls(this.camera, this.canvas);
 
     this.scene.add(this.camera);
-    this.redMeshBox();
+    this._renderScene();
   }
-
-  private redMeshBox() {
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const material = new THREE.MeshBasicMaterial({
-      color: 'red'
-    });
-
-    const mesh = new THREE.Mesh(geometry, material);
-    this.scene.add(mesh);
-  }
-
 
   public animate(): void {
     this.ngZone.runOutsideAngular(() => {
@@ -81,9 +67,6 @@ export class EngineBasicService implements OnDestroy {
     this.frameId = requestAnimationFrame(() => {
       this.render();
     });
-
-    // this.cube.rotation.x += 0.01;
-    // this.cube.rotation.y += 0.01;
     this.renderer.render(this.scene, this.camera);
   }
 
@@ -96,4 +79,6 @@ export class EngineBasicService implements OnDestroy {
 
     this.renderer.setSize(width, height);
   }
+
+  abstract _renderScene(): void;
 }

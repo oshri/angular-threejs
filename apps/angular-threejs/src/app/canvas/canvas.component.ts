@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Object3dModelEngineService } from '../services/3d-model-engine/3d-model-engine.service';
-import { EngineBasicService } from '../services/engine-basic/engine-basic.service';
+import { EngineBasicService } from '../services/basic-mesh/basic-mesh.service';
 @Component({
   selector: 'threejs-canvas',
   templateUrl: './canvas.component.html'
