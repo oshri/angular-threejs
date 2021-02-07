@@ -5,21 +5,14 @@ import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 @Injectable({ providedIn: 'root' })
-export class EngineService implements OnDestroy {
+export class EngineBasicService implements OnDestroy {
   private canvas: HTMLCanvasElement;
   private renderer: THREE.WebGLRenderer;
   private camera: THREE.PerspectiveCamera;
   private scene: THREE.Scene;
-
-  private ambientLight: THREE.AmbientLight;
-  private pointLight: THREE.PointLight;
-
-  private objLoader: OBJLoader;
-  private objLoaderMaterial: MTLLoader;
-  private orbitControls: OrbitControls;
-
   
   private controllerObject: any;
+  private orbitControls: OrbitControls;
   
   private frameId: number = null;
 
@@ -54,44 +47,19 @@ export class EngineService implements OnDestroy {
     this.orbitControls = new OrbitControls(this.camera, this.canvas);
 
     this.scene.add(this.camera);
-
-    // AmbientLight
-    this.ambientLight = new THREE.AmbientLight(0x404040);
-    this.ambientLight.position.z = 10;
-    this.scene.add(this.ambientLight);
-
-    // PointLight
-    this.pointLight = new THREE.PointLight(0xffffff, 1.4, 1000);
-    this.pointLight.position.set(0, 15, 15);
-    this.scene.add(this.pointLight);
-
-    this.loadControllerMaterial();
+    this.redMeshBox();
   }
 
-  loadControllerMaterial(): void {
-    this.objLoaderMaterial = new MTLLoader();
-    this.objLoaderMaterial.load('/assets/controller.mtl', (materials) => {
-      materials.preload();
-
-      this.objLoader = new OBJLoader();
-      this.objLoader.setMaterials(materials);
-
-      this.objLoader.load(
-        '/assets/controller.obj',
-        (object) => {
-          this.controllerObject = object;
-          this.controllerObject.position.set(0, 0, 0);
-          this.scene.add(this.controllerObject);
-        },
-        (xhr) => {
-          console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
-        },
-        (error) => {
-          console.log('An error happened', error);
-        }
-      );
+  private redMeshBox() {
+    const geometry = new THREE.BoxGeometry(1, 1, 1);
+    const material = new THREE.MeshBasicMaterial({
+      color: 'red'
     });
+
+    const mesh = new THREE.Mesh(geometry, material);
+    this.scene.add(mesh);
   }
+
 
   public animate(): void {
     this.ngZone.runOutsideAngular(() => {
