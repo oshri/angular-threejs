@@ -6,6 +6,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 export abstract class BaseEngineService implements OnDestroy {
   private canvas: HTMLCanvasElement;
   private renderer: THREE.WebGLRenderer;
+  private axesHelper: THREE.AxesHelper;
   camera: THREE.PerspectiveCamera;
   scene: THREE.Scene;
 
@@ -45,6 +46,11 @@ export abstract class BaseEngineService implements OnDestroy {
 
     this.scene.add(this.camera);
     this._renderScene();
+  }
+
+  renderAxesHelper(): void {
+    this.axesHelper = new THREE.AxesHelper(2);
+    this.scene.add(this.axesHelper);
   }
 
   public animate(): void {
