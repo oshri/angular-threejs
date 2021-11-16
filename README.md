@@ -2,6 +2,14 @@
 
 This project was generated using [Nx](https://nx.dev).
 
+
+#RUN E2E With Applitools
+
+```
+APPLITOOLS_API_KEY='key' nx e2e angular-threejs-e2e
+```
+
+
 <p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
 
 🔎 **Nx is a set of Extensible Dev Tools for Monorepos.**
