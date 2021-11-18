@@ -26,10 +26,18 @@ export abstract class BaseEngineService implements OnDestroy {
   public createScene(canvas: ElementRef<HTMLCanvasElement>): void {
     this.canvas = canvas.nativeElement;
 
+    this.canvas.getContext('webgl', {
+      preserveDrawingBuffer: true,
+      alpha: true,
+      antialias: true,
+      depth: true
+    });
+
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.canvas,
       alpha: true,
       antialias: true,
+      preserveDrawingBuffer: true
     });
     this.renderer.setSize(window.innerWidth, window.innerHeight);
 
