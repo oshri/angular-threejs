@@ -117,11 +117,16 @@ export class EngineBasicService extends BaseEngineService implements OnDestroy {
     });
 
     const mesh = new THREE.Mesh(geometry, material);
-    
-    mesh.position.set(config.position.x, config.position.y, config.position.z);
-    mesh.scale.set(config.scale.x, config.scale.y, config.scale.z);
 
-    return mesh;
+    const points = [];
+    const greenMaterial = new THREE.MeshBasicMaterial({color: 'green'});
+    points.push(new THREE.Vector3(-5, 0, 0));
+    points.push(new THREE.Vector3(0, 5, 0));
+    points.push(new THREE.Vector3(1, 0, 0));
+    const lineGeo = new THREE.BufferGeometry().setFromPoints(points);
+    const line = new THREE.Line(lineGeo, greenMaterial);
+    this.scene.add(line);
+    this.scene.add(mesh);
   }
 
   
