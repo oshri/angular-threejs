@@ -39,7 +39,7 @@ export class EngineBasicService extends BaseEngineService implements OnDestroy {
     const cubeGroup = new THREE.Group();
     this.scene.add(cubeGroup);
   
-    const meshCube1 = this.createRedCube({
+    const meshCube1: THREE.Mesh = this.createRedCube({
       dimensions: {
         x: 0.6,
         y: 0.6,
@@ -56,42 +56,6 @@ export class EngineBasicService extends BaseEngineService implements OnDestroy {
        z: 1
       }
     });
-
-    const meshCube2 = this.createRedCube({
-      dimensions: {
-        x: 0.8,
-        y: 0.8,
-        z: 0.8
-      },
-      position: {
-       x: 1.2,
-       y: 1.2,
-       z: 1.2
-      },
-      scale: {
-       x: 1,
-       y: 1,
-       z: 1
-      }
-    });
-
-    const meshCube3 = this.createRedCube({
-      dimensions: {
-        x: 1,
-        y: 1,
-        z: 1
-      },
-      position: {
-       x: 1,
-       y: 1,
-       z: 1
-      },
-      scale: {
-       x: 1,
-       y: 1,
-       z: 1
-      }
-    });
   
 
     meshCube1.rotation.y = Math.PI * 0.2;
@@ -99,8 +63,6 @@ export class EngineBasicService extends BaseEngineService implements OnDestroy {
     meshCube1.rotation.z = Math.PI * 0.2;
     
     cubeGroup.add(meshCube1);
-    cubeGroup.add(meshCube2);
-    cubeGroup.add(meshCube3);
 
     /** Distance between mesh object to camera */
     console.log(meshCube1.position.distanceTo(this.camera.position));
@@ -116,17 +78,7 @@ export class EngineBasicService extends BaseEngineService implements OnDestroy {
       color: 'red'
     });
 
-    const mesh = new THREE.Mesh(geometry, material);
-
-    const points = [];
-    const greenMaterial = new THREE.MeshBasicMaterial({color: 'green'});
-    points.push(new THREE.Vector3(-5, 0, 0));
-    points.push(new THREE.Vector3(0, 5, 0));
-    points.push(new THREE.Vector3(1, 0, 0));
-    const lineGeo = new THREE.BufferGeometry().setFromPoints(points);
-    const line = new THREE.Line(lineGeo, greenMaterial);
-    this.scene.add(line);
-    this.scene.add(mesh);
+    return new THREE.Mesh(geometry, material);
   }
 
   
